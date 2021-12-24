@@ -1,3 +1,12 @@
+<!-- Submit batch No -->
+<?php
+include '../koneksi.php';
+if(isset($_POST['submit']))
+{
+    $batchNo = $_POST['batchNo'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,8 +78,12 @@
                     </li><!--//nav-item-->
 
                     <li class="nav-item">
+                        <br>
+                    </li><!--//nav-item-->
+
+                    <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link " href="../php/usecase2/index.php">
+                        <a class="nav-link " href="../../php/usecase2/index.php">
 						        <span class="nav-icon">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                           <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
@@ -83,12 +96,7 @@
 
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="../../../../index5.php"> </a><!--//nav-link-->
-                    </li><!--//nav-item-->
-
-                    <li class="nav-item">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link active" href="php/usecase5/index5.php">
+                        <a class="nav-link active" href="index5.php">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                       <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -117,10 +125,10 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
 
-            <div class="row g-3 mb-4 align-items-center justify-content-between">
-                <div class="col-auto">
-                    <h1 class="app-page-title mb-0"Available Vaccine Batch Informatin</h1>
-                </div>
+                <div class="row g-3 mb-4 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <h1 class="app-page-title mb-0">Available Vaccine Batch Information</h1>
+                    </div>
 
                 <div class="tab-content" id="orders-table-tab-content">
                     <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -134,44 +142,61 @@
                                             <th class="cell">Vaccine Name</th>
                                             <th class="cell">Manufacturer</th>
                                             <th class="cell">Administered Amount</th>
-                                            <th class="cell">Pending Amount</th>
+                                            <!--<th class="cell">Pending Amount</th> -->
                                         </tr>
                                         </thead>
                                         <tbody>
 
+                                        <!-- AMOUND ADMINISTERED-->
+                                        <?php
+                                        //include '../koneksi.php';
+                                        //$countPending  = mysqli_query($koneksi, "SELECT COUNT(vaccination.status) AS total FROM vaccination
+                                                                                           //INNER JOIN batch ON vaccination.batchNo = batch.batchNo
+                                                                                            //WHERE vaccination.status = 'Pending' AND batch.batchNo = 112");
+
+                                        //$dataCP = mysqli_fetch_assoc($countPending);
+                                        //echo $dataCP;
+
+
+                                        ?>
 
                                         <?php
                                         error_reporting(0);
                                         include '../koneksi.php';
-                                        $listvaccine = mysqli_query($koneksi, "select * from batch 
+                                        $listvaccine = mysqli_query($koneksi, "select * from batch
 																					inner join vaccine
 																					on batch.vaccineID = vaccine.vaccineID");
                                         while ($row = mysqli_fetch_array($listvaccine)){
-
-                                            ?>
+                                        ?>
 
                                             <tr>
                                                 <td class="cell"><?php echo $row['batchNo']?></td>
                                                 <td class="cell"><?php echo $row['vaccineName']?></td>
                                                 <td class="cell"><?php echo $row['manufacturer']?></td>
                                                 <td class="cell"><?php echo $row['quantityAdministered']?></td>
-                                                <td class="cell"><?php echo $row['status']?></td>
+
+
                                             </tr>
                                         <?php } ?>
+
+
+
+
+
                                         </tbody>
                                     </table>
                                 </div><!--//table-responsive-->
                             </div><!--//app-card-body-->
                         </div><!--//app-card-->
+                        <div class="row g-4 settings-section">
+                            <div class="col-12 col-md-5">
+                                <h3 class="section-title"> Input Batch No :</h3>
+                                <div class="section-intro">Start for view vaccine batch information by selecting the Batch No of the table list above, and select manage for confirm or reject  </div>
+                            </div>
                     </div><!--//tab-pane-->
                 </div><!--//tab-content-->
 
-                <div class="row g-4 settings-section">
-                    <div class="col-12 col-md-0">
-                        <h3 class="section-title"> Input Batch No :</h3>
-                        <div class="section-intro">Start for make request vaccine appointment by selecting the ID of vaccine name, and inputting the required data </div>
-                    </div>
-
+                     <br>
                         <div class="app-card app-card-settings shadow-sm p-4">
                             <div class="app-card-body">
                                 <?php
@@ -186,17 +211,12 @@
                                 }
                                 ?>
 
-                                <?php
-                                if(isset($_POST['submit']))
-                                {
-                                    $batchNo = $_POST['vaccineID'];
-                                }
-                                ?>
+
 
                                 <form class="settings-form" action="" method="POST">
                                     <div class="mb-3">
                                         <label for="setting-input-1" class="form-label">Batch No :</label>
-                                        <input type="number" class="form-control" name="vaccineID" id="setting-input-1" required>
+                                        <input type="number" class="form-control" name="batchNo" id="setting-input-1" required>
                                     </div>
 
                                     <!--BUTTON SUBMIT 1 -->
@@ -224,10 +244,8 @@
                                                         <table class="table app-table-hover mb-0 text-left">
                                                             <thead>
                                                             <tr>
-
                                                                 <th class="cell">Vaccination ID</th>
                                                                 <th class="cell">Patient Name</th>
-                                                                <th class="cell">Vaccine Name</th>
                                                                 <th class="cell">Expiry Date</th>
                                                                 <th class="cell">Quantity Available</th>
                                                                 <th class="cell">Status</th>
@@ -248,20 +266,17 @@
                                                             while ($row = mysqli_fetch_array($listvaccine)){
 
                                                                 ?>
-
-                                                            <a class="nav-link" href="php/usecase6/index6.php">
-                                                                <tr>
-
+                                                                    <tr>
                                                                     <td class="cell"><?php echo $row['vaccinationID']?></td>
                                                                     <td class="cell"><?php echo $row['fullname']?></td>
-                                                                    <td class="cell"><?php echo $row['vaccineName']?></td>
                                                                     <td class="cell"><?php echo $row['expiryDate']?></td>
                                                                     <td class="cell"><?php echo $row['quantityAvailable']?></td>
                                                                     <td class="cell"><?php echo $row['status']?></td>
                                                                     <td class="cell"><?php echo $row['appointmentDate']?></td>
-                                                                    <td><button type="button" class="btn-sm app-btn-secondary">Manage</button></td>
-                                                                </tr>
-                                                            </a>
+                                                                    <td><a href="../usecase6/index6.php?vaccinationID=<?php echo $row['vaccinationID'];?>" type="button" class="btn-sm app-btn-secondary">Manage</a></td>
+                                                                    </tr>
+
+
                                                             <?php } ?>
                                                             </tbody>
                                                         </table>
